@@ -1,0 +1,282 @@
+.navbar {
+  position: relative;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e2d8;
+  height: 64px;
+  padding: 0 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.navbar-left {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+}
+
+.navbar-logo {
+  width: 22px;
+  height: 22px;
+  background: #14171f;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.navbar-logo span {
+  font-family: "Source Serif 4", Georgia, serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: #fafaf8;
+}
+
+.navbar-title {
+  font-family: "Source Serif 4", Georgia, serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: #14171f;
+  white-space: nowrap;
+}
+
+.navbar-links {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+/* Stable underline using an absolutely positioned pseudo-element —
+   not padding/margin offsets, which drift under layout changes. */
+.navbar-link {
+  position: relative;
+  font-family: Inter, sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: #9c9a92;
+  text-decoration: none;
+  transition: color 0.15s;
+  padding: 4px 0;
+}
+
+.navbar-link:hover {
+  color: #14171f;
+}
+
+.navbar-link-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.navbar-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -22px;
+  height: 2px;
+  background: #14171f;
+  transform: scaleX(0);
+  transition: transform 0.2s ease;
+}
+
+.navbar-link-active {
+  position: relative;
+  font-family: Inter, sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: #14171f;
+  text-decoration: none;
+  padding: 4px 0;
+}
+
+.navbar-link-active::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -22px;
+  height: 2px;
+  background: #14171f;
+  transform: scaleX(1);
+  transition: transform 0.2s ease;
+}
+
+.navbar-link-disabled {
+  font-family: Inter, sans-serif;
+  font-size: 13px;
+  color: #9c9a92;
+  cursor: default;
+  user-select: none;
+}
+
+.navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.navbar-btn-login {
+  font-family: Inter, sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: #14171f;
+  background: transparent;
+  border: none;
+  padding: 8px 14px;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: background-color 0.15s;
+}
+
+.navbar-btn-login:hover {
+  background: #f0efe6;
+}
+
+.navbar-btn-register {
+  font-family: Inter, sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: #fafaf8;
+  background: #14171f;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 18px;
+  cursor: pointer;
+  transition: background-color 0.15s;
+  white-space: nowrap;
+}
+
+.navbar-btn-register:hover {
+  background: #262b38;
+}
+
+.navbar-burger {
+  display: none;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 22px;
+  color: #14171f;
+  padding: 6px;
+  border-radius: 6px;
+  align-items: center;
+  justify-content: center;
+}
+
+.navbar-burger:hover {
+  background: #f0efe6;
+}
+
+.navbar-mobile-menu {
+  position: absolute;
+  top: 64px;
+  left: 0;
+  right: 0;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e2d8;
+  box-shadow: 0 4px 12px rgba(20, 23, 31, 0.08);
+  display: flex;
+  flex-direction: column;
+  padding: 12px 20px 20px;
+  gap: 4px;
+  z-index: 30;
+}
+
+.navbar-mobile-link {
+  font-family: Inter, sans-serif;
+  font-size: 14px;
+  padding: 12px 4px;
+  text-decoration: none;
+  text-align: left;
+}
+
+.navbar-mobile-link-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+}
+
+.navbar-mobile-link-active {
+  color: #14171f;
+  font-weight: 600;
+}
+
+.navbar-mobile-link-disabled {
+  color: #9c9a92;
+}
+
+.navbar-mobile-divider {
+  height: 1px;
+  background: #e5e2d8;
+  margin: 8px 0;
+}
+
+.navbar-mobile-btn-login {
+  font-family: Inter, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #14171f;
+  background: #f0efe6;
+  border: none;
+  border-radius: 6px;
+  padding: 12px;
+  cursor: pointer;
+  margin-bottom: 8px;
+}
+
+.navbar-mobile-btn-register {
+  font-family: Inter, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #fafaf8;
+  background: #14171f;
+  border: none;
+  border-radius: 6px;
+  padding: 12px;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    padding: 0 16px;
+    height: 56px;
+  }
+
+  .navbar-left {
+    gap: 16px;
+  }
+
+  .navbar-title {
+    font-size: 14px;
+  }
+
+  .navbar-links {
+    display: none;
+  }
+
+  .navbar-actions {
+    display: none;
+  }
+
+  .navbar-burger {
+    display: flex;
+  }
+}
+
+@media (max-width: 380px) {
+  .navbar-title {
+    display: none;
+  }
+}

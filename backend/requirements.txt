@@ -1,0 +1,2 @@
+Requirement already satisfied: email-validator in c:\users\charan chowdary\downloads\ats_analyser\backend\venv\lib\site-packages (2.3.0)
+Requirement already satisfied: pip in c:\users\charan chowdary\downloads\ats_analyser\backend\venv\lib\site-packages (25.0.1)

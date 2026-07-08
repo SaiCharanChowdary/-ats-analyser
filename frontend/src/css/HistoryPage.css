@@ -1,0 +1,267 @@
+.history-page {
+  min-height: 100vh;
+  background: #f7f8fa;
+}
+
+.history-container {
+  padding: 32px 40px 80px;
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+.history-header {
+  margin-bottom: 28px;
+}
+
+.history-eyebrow {
+  font-family: Inter, sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #6366f1;
+  margin: 0 0 8px;
+}
+
+.history-title {
+  font-family: "Source Serif 4", Georgia, serif;
+  font-size: 28px;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0 0 6px;
+}
+
+.history-subtitle {
+  font-family: Inter, sans-serif;
+  font-size: 13.5px;
+  color: #9ca3af;
+  margin: 0;
+}
+
+.history-status {
+  font-family: Inter, sans-serif;
+  font-size: 14px;
+  color: #6b7280;
+  padding: 20px 0;
+}
+
+.history-status-error {
+  color: #b91c1c;
+}
+
+.history-empty {
+  text-align: center;
+  padding: 60px 20px;
+  background: #ffffff;
+  border: 1px solid #eaecef;
+  border-radius: 16px;
+}
+
+.history-empty-title {
+  font-family: Inter, sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 12px 0 4px;
+}
+
+.history-empty-text {
+  font-family: Inter, sans-serif;
+  font-size: 13px;
+  color: #9ca3af;
+  margin: 0 0 18px;
+}
+
+.history-empty-btn {
+  font-family: Inter, sans-serif;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #ffffff;
+  background: #6366f1;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.history-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+.history-card {
+  background: #ffffff;
+  border: 1px solid #eaecef;
+  border-radius: 16px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.history-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.history-score-badge {
+  font-family: Inter, sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.history-score-strong {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.history-score-partial {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.history-score-weak {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.history-card-date {
+  font-family: Inter, sans-serif;
+  font-size: 11.5px;
+  color: #b0b3ba;
+}
+
+.history-card-role {
+  font-family: Inter, sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0 0 3px;
+}
+
+.history-card-company {
+  font-family: Inter, sans-serif;
+  font-size: 12.5px;
+  color: #9ca3af;
+  margin: 0 0 18px;
+}
+
+.history-card-location {
+  color: #b0b3ba;
+}
+
+.history-card-actions {
+  display: flex;
+  gap: 6px;
+  margin-top: auto;
+  flex-wrap: wrap;
+}
+
+.history-action-btn {
+  font-family: Inter, sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: #4b5563;
+  background: #f3f4f6;
+  border: none;
+  border-radius: 7px;
+  padding: 7px 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.history-action-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.history-action-primary {
+  color: #4338ca;
+  background: #eef2ff;
+}
+
+.history-action-danger {
+  color: #b91c1c;
+  background: #fef2f2;
+  margin-left: auto;
+}
+
+.jd-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(17, 24, 39, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  padding: 20px;
+}
+
+.jd-modal-card {
+  width: 100%;
+  max-width: 520px;
+  max-height: 70vh;
+  background: #ffffff;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.jd-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 20px;
+  border-bottom: 1px solid #eaecef;
+}
+
+.jd-modal-title {
+  font-family: Inter, sans-serif;
+  font-size: 14.5px;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0;
+}
+
+.jd-modal-close {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #9ca3af;
+  font-size: 16px;
+}
+
+.jd-modal-body {
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.jd-modal-body p {
+  font-family: Inter, sans-serif;
+  font-size: 13.5px;
+  color: #4b5563;
+  line-height: 1.7;
+  white-space: pre-wrap;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .history-container {
+    padding: 24px 16px 60px;
+  }
+
+  .history-grid {
+    grid-template-columns: 1fr;
+  }
+}

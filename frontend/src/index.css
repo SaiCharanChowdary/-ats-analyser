@@ -1,0 +1,22 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ink: #14171F;
+  --color-paper: #FAFAF8;
+  --color-paper-dim: #F0EFEA;
+  --color-forest: #2E5E4E;
+  --color-brick: #8B3A3A;
+  --color-slate: #5B6B8C;
+  --color-rule: #D8D5CC;
+  --color-rule-dark: #B8B4A8;
+
+  --font-serif: "Source Serif 4", Georgia, serif;
+  --font-sans: "Inter", system-ui, sans-serif;
+}
+
+body {
+ background-color: #FAFAF8;
+  color: #14171F;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-feature-settings: "tnum" 1;
+}
