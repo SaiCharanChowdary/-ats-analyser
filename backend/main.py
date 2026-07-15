@@ -23,29 +23,25 @@ app.include_router(resume_router.router)
 app.include_router(jd_router.router)
 app.include_router(analyse_router.router)
 app.include_router(auth_router.router)
-app.include_router(analyses_router.router) 
+app.include_router(analyses_router.router)
+
+# CORS_ORIGINS is a comma-separated list, set as an env var in production
+# (e.g. "https://your-app.vercel.app"). Locally, it falls back to your
+# Vite dev server — no .env change needed to keep developing as before.
+cors_origins_env = os.getenv("CORS_ORIGINS")
+if cors_origins_env:
+    allowed_origins = [origin.strip() for origin in cors_origins_env.split(",")]
+else:
+    allowed_origins = ["http://localhost:5173"]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],
+    allow_origins=allowed_origins,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
+
 @app.get("/")
 def root():
     return {"status": "ATS Analyser API is running"}
-    
-@app.get("/test-ai")
-def test_ai():
-    message = client.messages.create(
-        model="claude-sonnet-4-6",
-        max_tokens=128,
-        messages=[
-            {
-                "role": "user",
-                "content": "In one sentence, confirm you can analyse resumes."
-            }
-        ]
-    )
-    return {"message": message.content[0].text}

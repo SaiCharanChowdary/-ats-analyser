@@ -68,11 +68,9 @@ export async function deleteAnalysis(id) {
   return response.data
 }
 
-export async function getResumeBlobUrl(id) {
-  const response = await api.get(`/analyses/${id}/resume`, {
-    responseType: "blob",
-  })
-  return URL.createObjectURL(response.data)
+export async function getResumeUrl(id) {
+  const response = await api.get(`/analyses/${id}/resume`)
+  return response.data.url
 }
 
 export function isLoggedIn() {

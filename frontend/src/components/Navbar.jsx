@@ -11,6 +11,7 @@ export default function Navbar() {
 
   const isAnalysePage = location.pathname === "/"
   const isHistoryPage = location.pathname === "/history"
+  const isHowItWorksPage = location.pathname === "/how-it-works"
 
   function goToAuth(mode) {
     setMenuOpen(false)
@@ -49,7 +50,13 @@ export default function Navbar() {
           >
             History
           </button>
-          <span className="navbar-link-disabled">How it works</span>
+          <Link
+            to="/how-it-works"
+            className={isHowItWorksPage ? "navbar-link-active" : "navbar-link"}
+            onClick={() => setMenuOpen(false)}
+          >
+            How it works
+          </Link>
         </div>
       </div>
 
@@ -112,7 +119,17 @@ export default function Navbar() {
           >
             History
           </button>
-          <span className="navbar-mobile-link navbar-mobile-link-disabled">How it works</span>
+          <Link
+            to="/how-it-works"
+            onClick={() => setMenuOpen(false)}
+            className={
+              isHowItWorksPage
+                ? "navbar-mobile-link navbar-mobile-link-active"
+                : "navbar-mobile-link"
+            }
+          >
+            How it works
+          </Link>
           <div className="navbar-mobile-divider" />
           {loggedIn ? (
             <button type="button" className="navbar-mobile-btn-login" onClick={handleLogout}>

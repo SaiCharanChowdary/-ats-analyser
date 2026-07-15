@@ -3,6 +3,7 @@ import shutil, os, uuid
 from pipelines.resume_parser import parse_resume
 from pipelines.jd_parser import parse_jd
 from pipelines.claude_analyser import analyse_resume_with_claude
+from cloud_storage import upload_resume
 
 
 router = APIRouter(prefix="/analyse", tags=["Analyse"])
@@ -25,21 +26,27 @@ async def analyse(
     with open(file_path, "wb") as buffer:
         shutil.copyfileobj(resume.file, buffer)
 
-    resume_data = parse_resume(file_path)
-    jd_data = parse_jd(jd_text)
+    try:
+        resume_data = parse_resume(file_path)
+        jd_data = parse_jd(jd_text)
 
-    claude_result = analyse_resume_with_claude(
-        resume_text=resume_data["raw_text"],
-        jd_text=jd_data["raw_text"]
-    )
+        claude_result = analyse_resume_with_claude(
+            resume_text=resume_data["raw_text"],
+            jd_text=jd_data["raw_text"]
+        )
 
-    # The resume PDF is intentionally kept on disk (not deleted) so it
-    # can be viewed later from History if this analysis gets saved.
-    # If it's never saved, the file just sits unused — acceptable at
-    # this project's scale; a cleanup job would be the production fix.
+        # Upload to persistent cloud storage so the resume survives even
+        # on hosts with an ephemeral filesystem (like Render's free tier).
+        # This is a private/authenticated upload — not publicly viewable.
+        cloud_public_id = upload_resume(file_path, file_id)
+    finally:
+        # The local copy was only ever needed for parsing + the upload
+        # above — safe to remove it now regardless of what happened.
+        if os.path.exists(file_path):
+            os.remove(file_path)
 
     return {
         "status": "success",
         "analysis": claude_result,
-        "resume_file_id": file_id
+        "resume_file_id": cloud_public_id
     }

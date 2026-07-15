@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import Navbar from "../components/Navbar"
-import { getMyAnalyses, deleteAnalysis, getResumeBlobUrl, isLoggedIn } from "../api"
+import { getMyAnalyses, deleteAnalysis, getResumeUrl, isLoggedIn } from "../api"
 import "../css/HistoryPage.css"
 
 function scoreVerdictClass(score) {
@@ -55,7 +55,7 @@ export default function HistoryPage() {
 
   async function handleViewPdf(id) {
     try {
-      const url = await getResumeBlobUrl(id)
+      const url = await getResumeUrl(id)
       window.open(url, "_blank")
     } catch (err) {
       alert("The resume for this analysis is no longer available.")

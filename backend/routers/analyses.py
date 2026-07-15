@@ -1,6 +1,4 @@
-import os
 from fastapi import APIRouter, Depends, HTTPException
-from fastapi.responses import FileResponse
 from sqlalchemy.orm import Session
 from pydantic import BaseModel
 from typing import Any
@@ -8,10 +6,9 @@ from datetime import datetime
 from database import get_db
 from models import User, SavedAnalysis
 from auth_utils import get_current_user
+from cloud_storage import get_resume_signed_url, delete_resume
 
 router = APIRouter(prefix="/analyses", tags=["Saved Analyses"])
-
-UPLOAD_DIR = "uploads"
 
 
 class SaveAnalysisInput(BaseModel):
@@ -97,9 +94,13 @@ def delete_analysis(
         raise HTTPException(404, "Analysis not found")
 
     if record.resume_file_id:
-        file_path = f"{UPLOAD_DIR}/{record.resume_file_id}.pdf"
-        if os.path.exists(file_path):
-            os.remove(file_path)
+        try:
+            delete_resume(record.resume_file_id)
+        except Exception:
+            # If Cloudinary deletion fails for any reason, don't block
+            # deleting the database record — an orphaned file in storage
+            # is a minor cleanup issue, not a user-facing one.
+            pass
 
     db.delete(record)
     db.commit()
@@ -108,7 +109,7 @@ def delete_analysis(
 
 
 @router.get("/{analysis_id}/resume")
-def get_resume_file(
+def get_resume_url(
     analysis_id: int,
     current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db)
@@ -124,8 +125,5 @@ def get_resume_file(
     if record is None or not record.resume_file_id:
         raise HTTPException(404, "Resume not found for this analysis")
 
-    file_path = f"{UPLOAD_DIR}/{record.resume_file_id}.pdf"
-    if not os.path.exists(file_path):
-        raise HTTPException(404, "Resume file no longer exists on the server")
-
-    return FileResponse(file_path, media_type="application/pdf")
+    signed_url = get_resume_signed_url(record.resume_file_id)
+    return {"url": signed_url}
