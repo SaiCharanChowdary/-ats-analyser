@@ -1,6 +1,9 @@
 import axios from "axios"
 
-const API_BASE_URL = "http://localhost:8000"
+// In production, Vercel will provide VITE_API_URL pointing at your
+// deployed Render backend. Locally, it falls back to localhost — no
+// .env needed for local dev unless you want to override it.
+const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8000"
 
 const api = axios.create({
   baseURL: API_BASE_URL,
