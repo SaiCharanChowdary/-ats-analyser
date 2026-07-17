@@ -6,7 +6,8 @@ anthropic
 pdfplumber
 sqlalchemy
 psycopg2-binary
-passlib[bcrypt]
+passlib
+bcrypt<4.1
 python-jose[cryptography]
 email-validator
 cloudinary
