@@ -1,17 +1,22 @@
 import { useState, useRef } from "react"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useLocation } from "react-router-dom"
 import Navbar from "../components/Navbar"
 import LoadingOverlay from "../components/LoadingOverlay"
+import Toast from "../components/Toast"
 import { analyseResume } from "../api"
 import "../css/UploadPage.css"
 
 export default function UploadPage() {
+  const { state } = useLocation()
   const [resumeFile, setResumeFile] = useState(null)
   const [jdText, setJdText] = useState("")
   const [isDragging, setIsDragging] = useState(false)
   const [errors, setErrors] = useState({ resume: "", jd: "" })
   const [isAnalysing, setIsAnalysing] = useState(false)
   const [serverError, setServerError] = useState("")
+  const [toast, setToast] = useState(
+    state?.toastMessage ? { message: state.toastMessage, type: "success" } : null
+  )
 
   const fileInputRef = useRef(null)
   const navigate = useNavigate()
@@ -217,6 +222,10 @@ export default function UploadPage() {
 
         </div>
       </div>
+
+      {toast && (
+        <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />
+      )}
     </div>
   )
 }

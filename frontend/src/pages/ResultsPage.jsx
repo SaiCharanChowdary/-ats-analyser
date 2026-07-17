@@ -2,6 +2,7 @@ import { useState, useEffect } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
 import Navbar from "../components/Navbar"
 import SaveModal from "../components/SaveModal"
+import Toast from "../components/Toast"
 import { saveAnalysis, isLoggedIn } from "../api"
 import "../css/ResultsPage.css"
 
@@ -35,6 +36,9 @@ export default function ResultsPage() {
   const [showSaveModal, setShowSaveModal] = useState(false)
   const [saveState, setSaveState] = useState("idle") // idle | saving | saved | error
   const [saveError, setSaveError] = useState("")
+  const [toast, setToast] = useState(
+    state?.toastMessage ? { message: state.toastMessage, type: "success" } : null
+  )
 
   async function attemptSave({ companyName, roleName, location }) {
     if (!result) return
@@ -76,6 +80,7 @@ export default function ResultsPage() {
     try {
       await saveAnalysis(saveFields)
       setSaveState("saved")
+      setToast({ message: "Saved — find it anytime in your History.", type: "success" })
     } catch (err) {
       setSaveState("error")
       setSaveError(
@@ -380,6 +385,10 @@ export default function ResultsPage() {
 
       {saveState === "error" && (
         <p className="save-error-toast">{saveError}</p>
+      )}
+
+      {toast && (
+        <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />
       )}
     </div>
   )

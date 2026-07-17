@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import Navbar from "../components/Navbar"
+import Toast from "../components/Toast"
 import { getMyAnalyses, deleteAnalysis, getResumeUrl, isLoggedIn } from "../api"
 import "../css/HistoryPage.css"
 
@@ -17,6 +18,7 @@ export default function HistoryPage() {
   const [error, setError] = useState("")
   const [deletingId, setDeletingId] = useState(null)
   const [jdModalText, setJdModalText] = useState(null)
+  const [toast, setToast] = useState(null)
 
   useEffect(() => {
     if (!isLoggedIn()) {
@@ -46,19 +48,36 @@ export default function HistoryPage() {
     try {
       await deleteAnalysis(id)
       setAnalyses((prev) => prev.filter((a) => a.id !== id))
+      setToast({ message: "Analysis deleted.", type: "success" })
     } catch (err) {
-      alert("Couldn't delete this analysis. Try again.")
+      setToast({ message: "Couldn't delete this analysis. Try again.", type: "error" })
     } finally {
       setDeletingId(null)
     }
   }
 
   async function handleViewPdf(id) {
+    // IMPORTANT: open the tab synchronously, BEFORE the await below.
+    // Calling window.open() after an async gap is no longer treated as
+    // a direct result of the click by most browsers, so it gets
+    // silently blocked as a popup — this is why the resume "wasn't
+    // visible" before. Opening a blank tab immediately, then filling
+    // in its URL once we have it, keeps this inside the trusted
+    // click gesture and avoids the popup blocker entirely.
+    const newTab = window.open("", "_blank")
+
     try {
       const url = await getResumeUrl(id)
-      window.open(url, "_blank")
+      if (newTab) {
+        newTab.location.href = url
+      } else {
+        // Popup blocker still intervened (rare, but possible) —
+        // fall back to navigating the current tab instead.
+        window.location.href = url
+      }
     } catch (err) {
-      alert("The resume for this analysis is no longer available.")
+      if (newTab) newTab.close()
+      setToast({ message: "The resume for this analysis is no longer available.", type: "error" })
     }
   }
 
@@ -179,6 +198,10 @@ export default function HistoryPage() {
             </div>
           </div>
         </div>
+      )}
+
+      {toast && (
+        <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />
       )}
     </div>
   )
